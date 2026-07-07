@@ -9,10 +9,11 @@
 body {
     background-color: #f1f5f9;
     color: #1e293b;
-    padding-top: 70px;
+    /* Odsazení shora, které dynamicky reaguje na výšku navigace */
+    padding-top: calc(75px + env(safe-area-inset-top));
 }
 
-/* Sjednocená navigace */
+/* Sjednocená navigace upravená pro mobilní telefony */
 .navbar {
     background-color: #ffffff;
     border-bottom: 1px solid #e2e8f0;
@@ -20,17 +21,21 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px;
+    /* Výška zohledňuje bezpečné zóny displeje u telefonů s výřezem */
+    height: calc(60px + env(safe-area-inset-top));
+    padding-top: env(safe-area-inset-top);
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 25px;
     z-index: 1000;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 /* Styly pro rozbalovací menu */
 .dropdown {
     position: relative;
     display: inline-block;
+    outline: none; /* Odstraní otravný rámeček při kliknutí na mobilu */
 }
 
 .dropbtn {
@@ -38,9 +43,10 @@ body {
     color: #475569;
     font-weight: bold;
     font-size: 16px;
-    padding: 18px 10px;
+    padding: 18px 5px;
     cursor: pointer;
     user-select: none;
+    -webkit-tap-highlight-color: transparent; /* Skryje šedý problik při klepnutí na mobilu */
 }
 
 .dropbtn:hover {
@@ -56,7 +62,7 @@ body {
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     overflow: hidden;
-    top: 55px;
+    top: 100%; /* Rozbalí se přesně pod tlačítkem */
 }
 
 .dropdown-content a {
@@ -72,20 +78,26 @@ body {
     color: #3498db;
 }
 
-.dropdown:hover .dropdown-content {
+/* Podpora pro najetí myší na PC + dotyk/kliknutí na mobilu */
+.dropdown:hover .dropdown-content,
+.dropdown:focus .dropdown-content,
+.dropdown:focus-within .dropdown-content {
     display: block;
 }
 
 /* Speciální mřížka pro 16 témat */
 .grid-menu {
-    min-width: 380px !important;
+    min-width: 360px !important;
     display: none !important;
     grid-template-columns: 1fr 1fr;
     gap: 2px;
     padding: 8px !important;
 }
 
-.dropdown:hover .grid-menu {
+/* Aktivace mřížky na PC i na mobilu */
+.dropdown:hover .grid-menu,
+.dropdown:focus .grid-menu,
+.dropdown:focus-within .grid-menu {
     display: grid !important;
 }
 
@@ -96,13 +108,14 @@ body {
     font-weight: bold; 
     font-size: 16px; 
     align-self: center;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Hlavní kontejner aplikace */
 .container {
     background: #ffffff;
     max-width: 500px;
-    margin: 40px auto;
+    margin: 20px auto;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
@@ -127,7 +140,7 @@ h1 {
     border-radius: 8px;
 }
 
-/* Tlačítka */
+/* Základní velká tlačítka */
 button {
     background-color: #3498db;
     color: white;
@@ -139,6 +152,7 @@ button {
     cursor: pointer;
     transition: background 0.2s;
     width: 100%;
+    -webkit-tap-highlight-color: transparent;
 }
 
 button:hover {
@@ -177,6 +191,7 @@ input[type="text"] {
     margin-bottom: 12px;
     outline: none;
     text-align: center;
+    -webkit-appearance: none; /* Odstraní výchozí styly na iOS */
 }
 
 input[type="text"]:focus {
@@ -216,7 +231,7 @@ input[type="text"]:focus {
     color: #ef4444;
 }
 
-/* --- Sekce pro nová mini tlačítka --- */
+/* Panel s mini tlačítky */
 .mini-buttons-container {
     display: flex;
     gap: 8px;
@@ -231,8 +246,8 @@ input[type="text"]:focus {
     border-radius: 6px;
     cursor: pointer;
     font-weight: 600;
-    width: auto; /* Zabrání tlačítkům roztáhnout se na celou šířku */
-    flex: 1;    /* Rozdělí prostor rovnoměrně */
+    width: auto; 
+    flex: 1;    /* Rozdělí prostor rovnoměrně na mobilu */
 }
 
 .btn-mini-danger { background-color: #ef4444; color: white; }
@@ -251,14 +266,15 @@ input[type="text"]:focus {
 
 /* Responzivita pro mobily */
 @media (max-width: 600px) {
-    body {
-        padding-top: 60px;
-    }
     .navbar {
         gap: 10px;
     }
     .grid-menu {
-        min-width: 280px !important;
+        min-width: 290px !important; /* Upraveno, aby se menu vešlo na menší displeje */
+        position: fixed;
+        left: 5%;
+        right: 5%;
+        width: 90%;
     }
     .container {
         margin: 15px;
