@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procvičování slovíček</title>
+    <meta name="theme-color" content="#3498db">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Slovíčka">
+<link rel="apple-touch-icon" href="ikona.png">
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+      .then(() => console.log('Appka je připravena pro mobil!'))
+      .catch(err => console.log('Chyba při registraci:', err));
+  }
+</script>
+    <link rel="stylesheet" href="styly.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="dropdown">
+        <span class="dropbtn">Trénink ▾</span>
+        <div class="dropdown-content">
+            <a href="#" onclick="zmenMod(event, 'psani')">Psaní překladu</a>
+            <a href="#" onclick="zmenMod(event, 'vyber')">Výběr ze 4 možností</a>
+        </div>
+    </div>
+    
+    <div class="dropdown">
+        <span class="dropbtn">Témata ▾</span>
+        <div class="dropdown-content grid-menu">
+            <a href="#" onclick="zmenSekci(event, 'zakladni_fraze')">💬 Základní fráze</a>
+            <a href="#" onclick="zmenSekci(event, 'osobni_udaje')">🪪 Osobní údaje</a>
+            <a href="#" onclick="zmenSekci(event, 'slovesa')">🏃‍♂️ Základní slovesa</a>
+            <a href="#" onclick="zmenSekci(event, 'barvy')">🎨 Barvy</a>
+            <a href="#" onclick="zmenSekci(event, 'cisla')">🔢 Čísla</a>
+            <a href="#" onclick="zmenSekci(event, 'dny_v_tydnu')">📅 Dny v týdnu</a>
+            <a href="#" onclick="zmenSekci(event, 'mesice')">🗓 Měsíce</a>
+            <a href="#" onclick="zmenSekci(event, 'rodina')">👨‍👩‍👧‍👦 Rodina</a>
+            <a href="#" onclick="zmenSekci(event, 'casti_tela')">💪 Části těla</a>
+            <a href="#" onclick="zmenSekci(event, 'vlastnosti_tela')">📐 Rozměry & Vlastnosti</a>
+            <a href="#" onclick="zmenSekci(event, 'mistnosti_v_dome')">🏠 Místnosti v domě</a>
+            <a href="#" onclick="zmenSekci(event, 'zakladni_budovy')">🏢 Budovy</a>
+            <a href="#" onclick="zmenSekci(event, 'pocasi')">☀️ Počasí</a>
+            <a href="#" onclick="zmenSekci(event, 'konicky_a_sporty')">⚽ Koníčky & Sporty</a>
+            <a href="#" onclick="zmenSekci(event, 'dopravni_prostredky')">🚗 Doprava</a>
+            <a href="#" onclick="zmenSekci(event, 'jidlo')">🍎 Jídlo (Ovoce/Zel.)</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <span class="dropbtn">Jazyk ▾</span>
+        <div class="dropdown-content">
+            <a href="#" onclick="zmenJazyk(event, 'anglictina')">Angličtina</a>
+            <a href="#" onclick="zmenJazyk(event, 'nemcina')">Němčina</a>
+            <a href="#" onclick="zmenJazyk(event, 'spanelstina')">Španělština</a>
+            <a href="#" onclick="zmenJazyk(event, 'nizozemstina')">Nizozemština</a>
+            <a href="#" onclick="zmenJazyk(event, 'francouzstina')">Francouzština</a>
+            <a href="#" onclick="zmenJazyk(event, 'svedstina')">Švédština</a>
+            <a href="#" onclick="zmenJazyk(event, 'rustina')">Ruština</a>
+            <a href="#" onclick="zmenJazyk(event, 'italstina')">Italština</a>
+        </div>
+    </div>
+
+    <a href="slovnik.html" class="nav-link-slovnik">Slovník 🔍</a>
+</nav>
+
+<div class="container">
+    <h1>Vocabulary Trainer</h1>
+
+    <div class="score-board">
+        <div>Série: <span id="current-streak">0</span> 🔥</div>
+        <div>Nejlepší: <span id="best-streak">0</span> 🏆</div>
+    </div>
+    
+    <button id="reverse-btn" onclick="otocSmer()">🔄 Otočit směr překladu</button>
+    
+    <p id="instruction-text">Přelož slovo:</p>
+    <div class="word-to-translate" id="question-word">Načítám...</div>
+    
+    <div id="input-mode-zone">
+        <input type="text" id="english-input" placeholder="Napiš odpověď" autocomplete="off">
+        <br>
+        <button id="submit-btn" onclick="checkWriteAnswer()">Zkontrolovat</button>
+        
+        <div class="mini-buttons-container">
+            <button id="dont-know-btn" class="btn-mini btn-mini-danger" onclick="nevis()">Nevím ✗</button>
+            <button id="know-btn" class="btn-mini btn-mini-success" onclick="oznacUmim()">Umím ✓</button>
+            <button id="next-btn" class="btn-mini btn-mini-secondary" onclick="dalsiSlovicko()">Další →</button>
+        </div>
+    </div>
+
+    <div id="choice-mode-zone" class="hidden">
+        <div id="options-container"></div>
+    </div>
+    
+    <div class="result" id="result-message"></div>
+</div>
+
+<script src="database.js"></script>
+<script src="aplikace.js"></script>
+
+</body>
+</html>

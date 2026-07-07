@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chytrý Slovník A1</title>
+    <link rel="stylesheet" href="styly.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="index.html" style="text-decoration: none; color: #475569; font-weight: bold; font-size: 16px; align-self: center;">Trénink 🎮</a>
+    
+    <div class="dropdown">
+        <span class="dropbtn">Sekce ▾</span>
+        <div class="dropdown-content">
+            <a href="index.html">A1 - Část 1 (1-25)</a>
+            <a href="index.html">A1 - Část 2 (26-50)</a>
+            <a href="index.html">A1 - Část 3 (51-75)</a>
+            <a href="index.html">A1 - Část 4 (76-100)</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <span class="dropbtn">Jazyk ▾</span>
+        <div class="dropdown-content">
+            <a href="index.html">Angličtina</a>
+            <a href="index.html">Němčina</a>
+            <a href="index.html">Španělština</a>
+            <a href="index.html">Nizozemština</a>
+            <a href="index.html">Ruština</a>
+            <a href="index.html">Švédština</a>
+            <a href="index.html">Francouzština</a>
+            <a href="index.html">Italštinaa</a>
+        </div>
+    </div>
+
+    <a href="slovnik.html" style="text-decoration: none; color: #3498db; font-weight: bold; font-size: 16px; align-self: center;">Slovník 🔍</a>
+</nav>
+
+<div class="container" style="margin-top: 50px; text-align: center;">
+    <h1>Celkový Slovník A1</h1>
+    <p style="color: #64748b; margin-bottom: 20px;">Můžeš zadat slovo v češtině, angličtině, němčině i španělštině!</p>
+    
+    <input type="text" id="search-page-input" placeholder="Zadej jakékoliv slovo..." autocomplete="off" style="width: 80%; padding: 12px; font-size: 16px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 10px;">
+    <br>
+    <button onclick="hledejVeSlovniku()" style="padding: 12px 24px; font-size: 16px; background-color: #3498db; width: auto;">Vyhledat překlady</button>
+    
+    <div id="search-page-result" style="margin-top: 30px; text-align: left; max-width: 400px; margin-left: auto; margin-right: auto;"></div>
+</div>
+
+<script src="database.js"></script>
+<script>
+    function odstranDiakritiku(text) {
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function hledejVeSlovniku() {
+        const hledanyText = document.getElementById("search-page-input").value.trim().toLowerCase();
+        const vysledekDiv = document.getElementById("search-page-result");
+        
+        if (hledanyText === "") {
+            vysledekDiv.innerHTML = "<p style='color: #94a3b8; text-align: center;'>Napiš nějaké slovo.</p>";
+            return;
+        }
+
+        const cisteHledaneSlovo = odstranDiakritiku(hledanyText);
+        let nalezeneSlovicko = null;
+
+        for (const sekce in centralniDatabaze) {
+            const vysledek = centralniDatabaze[sekce].find(s => 
+                odstranDiakritiku(s.cesky.toLowerCase()) === cisteHledaneSlovo ||
+                odstranDiakritiku(s.en.toLowerCase()) === cisteHledaneSlovo ||
+                odstranDiakritiku(s.de.toLowerCase()) === cisteHledaneSlovo ||
+                odstranDiakritiku(s.es.toLowerCase()) === cisteHledaneSlovo
+            );
+            
+            if (vysledek) {
+                nalezeneSlovicko = vysledek;
+                break;
+            }
+        }
+
+        if (nalezeneSlovicko) {
+            vysledekDiv.innerHTML = `
+                <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 16px; line-height: 2;">
+                    <strong style="color: #475569;">🇨🇿 Čeština:</strong> ${nalezeneSlovicko.cesky}<br>
+                    <strong style="color: #3498db;">🇬🇧 Angličtina:</strong> ${nalezeneSlovicko.en}<br>
+                    <strong style="color: #10b981;">🇩🇪 Němčina:</strong> ${nalezeneSlovicko.de}<br>
+                    <strong style="color: #f59e0b;">🇪🇸 Španělština:</strong> ${nalezeneSlovicko.es}<br>
+                    <strong>🇳🇱 Nizozemština:</strong> ${nalezeneSlovicko.nl}<br>
+                    <strong>🇫🇷 Francouzština:</strong> ${nalezeneSlovicko.fr}<br>
+                    <strong>🇸🇪 Švédština:</strong> ${nalezeneSlovicko.sv}<br>
+                    <strong>🇷🇺 Ruština:</strong> ${nalezeneSlovicko.ru}<br>
+                    <strong>🇮🇹 Italština:</strong> ${nalezeneSlovicko.it}
+                </div>
+            `;
+        } else {
+            vysledekDiv.innerHTML = "<p style='color: #ef4444; text-align: center;'>Slovíčko nebylo v žádném jazyce nalezeno.</p>";
+        }
+    }
+
+    document.getElementById("search-page-input").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            hledejVeSlovniku();
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "short_name": "Slovíčka",
+  "name": "Vocabulary Trainer App",
+  "icons": [
+    {
+      "src": "ikona.jpg",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#f1f5f9",
+  "theme_color": "#3498db",
+  "display": "standalone",
+  "orientation": "portrait"
+}
