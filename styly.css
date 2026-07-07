@@ -269,13 +269,18 @@ input[type="text"]:focus {
     .navbar {
         gap: 10px;
     }
+    
+    /* Tady je to kouzlo: na mobilu na výšku uděláme z mřížky 1 sloupec */
     .grid-menu {
-        min-width: 290px !important; /* Upraveno, aby se menu vešlo na menší displeje */
-        position: fixed;
-        left: 5%;
-        right: 5%;
-        width: 90%;
+        min-width: 200px !important; /* Zúžíme celé menu */
+        grid-template-columns: 1fr !important; /* Jen 1 sloupec místo 2 */
+        max-height: 400px; /* Pokud by bylo moc dlouhé, povolí se rolování */
+        overflow-y: auto;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%); /* Vycentruje menu pod nápis Témata */
     }
+    
     .container {
         margin: 15px;
         padding: 20px;
