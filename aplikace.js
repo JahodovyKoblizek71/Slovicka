@@ -201,3 +201,17 @@ document.getElementById("english-input").addEventListener("keypress", function(e
 // Start hry
 aktualizujSkoreRozhrani();
 vygenerujSlovicko();
+
+function prepniMenu(e) {
+    e.stopPropagation();
+    const dropdown = document.getElementById('temata-dropdown');
+    dropdown.classList.toggle('open');
+}
+
+// Když uživatel klikne kamkoli jinam na obrazovku, menu se zavře
+document.addEventListener('click', function() {
+    const dropdown = document.getElementById('temata-dropdown');
+    if (dropdown) {
+        dropdown.classList.remove('open');
+    }
+});

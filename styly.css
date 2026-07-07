@@ -281,3 +281,6 @@ input[type="text"]:focus {
         padding: 20px;
     }
 }
+.dropdown.open .grid-menu {
+    display: grid !important;
+}
