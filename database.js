@@ -397,8 +397,6 @@ const centralniDatabaze = {
   { cesky: "bavit se / užívat si", en: "have fun", de: "Spaß haben", es: "divertirse" },
   { cesky: "organizovat", en: "organize", de: "organisieren", es: "organizar" },
   { cesky: "plánovat", en: "plan", de: "planen", es: "planificar" },
-
-  // KOMUNIKACE A MYŠLENÍ
   { cesky: "povídat si", en: "chat / talk", de: "sprechen / sich unterhalten", es: "charlar" },
   { cesky: "diskutovat", en: "discuss", de: "diskutieren", es: "discutir" },
   { cesky: "souhlasit", en: "agree", de: "zustimmen", es: "estar de acuerdo" },
@@ -410,8 +408,6 @@ const centralniDatabaze = {
   { cesky: "slíbit", en: "promise", de: "versprechen", es: "prometer" },
   { cesky: "lhát", en: "lie", de: "lügen", es: "mentir" },
   { cesky: "mlčet", en: "be silent", de: "schweigen", es: "callar" },
-
-  //PŘÍRODA, POČASÍ A PROSTŘEDÍ
   { cesky: "pršet", en: "rain", de: "regnen", es: "llover" },
   { cesky: "sněžit", en: "snow", de: "schneien", es: "nevar" },
   { cesky: "foukat (vítr)", en: "blow", de: "wehen / blasen", es: "soplar" },
@@ -420,7 +416,7 @@ const centralniDatabaze = {
   { cesky: "mrazit", en: "freeze", de: "frieren", es: "helar" },
   { cesky: "horořet / pálit", en: "burn", de: "brennen", es: "arder" },
 
-  // DOMÁCNOST A ČINNOSTI
+
   { cesky: "vařit (voda)", en: "boil", de: "kochen", es: "hervir" },
   { cesky: "smažit", en: "fry", de: "braten", es: "freír" },
   { cesky: "krájet", en: "slice / cut", de: "schneiden", es: "cortar" },
